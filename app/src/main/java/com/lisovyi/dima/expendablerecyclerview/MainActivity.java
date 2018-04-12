@@ -3,10 +3,8 @@ package com.lisovyi.dima.expendablerecyclerview;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.widget.Toast;
 
 import com.lisovyi.dima.expendablerecyclerview.adapters.ItemListAdapter;
 import com.lisovyi.dima.expendablerecyclerview.data.DataProvider;
@@ -20,6 +18,8 @@ import com.lisovyi.dima.expendablerecyclerview.util.UiUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestItems() {
         if (!AndroidUtil.internetConnected(this)) {
-            showMessage(R.string.no_internet_connection);
+            UiUtil.showMessage(this, R.string.no_internet_connection);
             return;
         }
         getDataProvider().getItems(new ResponseListener<ItemsResponce>() {
@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(int errorCode) {
-                showMessage(R.string.something_went_wrong);
+            public void onFailure(int errorCode, ResponseBody errorBody) {
+                UiUtil.showMessage(MainActivity.this, R.string.something_went_wrong);
 
                 MainActivity context = MainActivity.this;
                 UiUtil.createDialog(context, context.getString(R.string.show_mock, errorCode),
@@ -79,11 +79,11 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }).show();
             }
-        });
-    }
+            @Override
+            public void onError(Throwable error) {
 
-    private void showMessage(@StringRes int stringRes) {
-        Toast.makeText(this, stringRes, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public DataProvider getDataProvider() {

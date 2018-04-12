@@ -2,10 +2,15 @@ package com.lisovyi.dima.expendablerecyclerview.util;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 public class UiUtil {
 
+    public static void showMessage(Context context, @StringRes int stringRes) {
+        Toast.makeText(context, stringRes, Toast.LENGTH_LONG).show();
+    }
 
     public static AlertDialog createDialog(Context context, String message,
                                            final DialogInterface.OnClickListener positiveButtonListener) {

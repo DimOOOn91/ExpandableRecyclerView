@@ -8,6 +8,7 @@ import com.lisovyi.dima.expendablerecyclerview.data.remote.ItemsResponce;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,7 +68,7 @@ public class DataProvider {
             } else {
                 Log.d("DataProvider", "failure response from API");
                 if (listener != null) {
-                    listener.onFailure(response.code());
+                    listener.onFailure(response.code(), response.errorBody());
                 }
             }
             listener = null;
@@ -77,7 +78,7 @@ public class DataProvider {
         public void onFailure(Call<T> call, Throwable t) {
             Log.d("DataProvider", "error loading from API");
             if (listener != null) {
-                listener.onFailure(0);
+                listener.onError(t);
             }
             listener = null;
         }
@@ -85,6 +86,7 @@ public class DataProvider {
 
     public interface ResponseListener<T> {
         void onSuccess(T body);
-        void onFailure(int errorCode);
+        void onFailure(int errorCode, ResponseBody errorBody);
+        void onError(Throwable error);
     }
 }
