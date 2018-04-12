@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.lisovyi.dima.expendablerecyclerview.data.model.GroupItem" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_height"
+            android:background="@color/lightGray"
+            android:button="@null"
+            android:clickable="@{item.hasChildren()}"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="start|center_vertical"
+            android:paddingEnd="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_default"
+            android:paddingRight="@dimen/padding_default"
+            android:paddingStart="@dimen/padding_default"
+            android:text="@{item.name}"
+            android:stateListAnimator="@null"/>
+
+        <ImageView
+            android:id="@+id/iv_expand_arrow"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:rotation="@{item.expanded ? 180F : 0F}"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_expand_arrow"
+            android:visibility="@{item.hasChildren() ? View.VISIBLE : View.GONE}" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_below="@id/btn_parent"/>
+
+    </RelativeLayout>
+
+</layout>

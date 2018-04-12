@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.lisovyi.dima.expendablerecyclerview.data.model.Item" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/cb_item"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_height"
+            android:button="@null"
+            android:checked="@={item.checked}"
+            android:drawableEnd="@drawable/ic_check"
+            android:drawableRight="@drawable/ic_check"
+            android:gravity="start|center_vertical"
+            android:paddingEnd="@dimen/padding_default"
+            android:paddingLeft="@dimen/padding_default"
+            android:paddingRight="@dimen/padding_default"
+            android:paddingStart="@dimen/padding_default"
+            android:text="@{item.name}" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray" />
+    </LinearLayout>
+</layout>

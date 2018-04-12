@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ExpendableRecyclerView</string>
+
+    <string name="selected_point">#10004</string>
+    <string name="something_went_wrong">Something went wrong, please try again later</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="show_mock">Data cannot be loaded from the server because of error No %d. Would you like to show mock?</string>
+</resources>
