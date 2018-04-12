@@ -1,12 +1,11 @@
 package com.lisovyi.dima.expendablerecyclerview;
 
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.lisovyi.dima.expendablerecyclerview.adapters.ItemListAdapter;
@@ -14,8 +13,10 @@ import com.lisovyi.dima.expendablerecyclerview.data.DataProvider;
 import com.lisovyi.dima.expendablerecyclerview.data.DataProvider.ResponseListener;
 import com.lisovyi.dima.expendablerecyclerview.data.model.GroupItem;
 import com.lisovyi.dima.expendablerecyclerview.data.model.Item;
+import com.lisovyi.dima.expendablerecyclerview.data.remote.ItemsResponce;
 import com.lisovyi.dima.expendablerecyclerview.databinding.ActivityMainBinding;
 import com.lisovyi.dima.expendablerecyclerview.util.AndroidUtil;
+import com.lisovyi.dima.expendablerecyclerview.util.UiUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
             showMessage(R.string.no_internet_connection);
             return;
         }
-        getDataProvider().getItems(new ResponseListener<List<GroupItem>>() {
+        getDataProvider().getItems(new ResponseListener<ItemsResponce>() {
             @Override
-            public void onSuccess(List<GroupItem> body) {
-                adapter.setGroups(body);
+            public void onSuccess(ItemsResponce body) {
+                adapter.setGroups(body.getItems());
             }
 
             @Override
@@ -70,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 showMessage(R.string.something_went_wrong);
 
                 MainActivity context = MainActivity.this;
-                AndroidUtil.createDialog(context, context.getString(R.string.show_mock, errorCode),
-                        new OnClickListener() {
+                UiUtil.createDialog(context, context.getString(R.string.show_mock, errorCode),
+                        new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(View v) {
+                            public void onClick(DialogInterface dialog, int which) {
                                 adapter.setGroups(items);
                             }
                         }).show();
